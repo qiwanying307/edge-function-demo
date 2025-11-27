@@ -45,33 +45,8 @@ export default function Home() {
           color: '#1e293b',
           marginBottom: '1rem'
         }}>
-          🌍 Edge Functions 边缘位置验证
+          Edge Functions 边缘位置验证
         </h1>
-        <p style={{ 
-          fontSize: '1.2rem', 
-          color: '#64748b',
-          marginBottom: '2rem'
-        }}>
-          实时证明您的请求在最近的边缘节点执行
-        </p>
-        
-        {/* 刷新按钮 */}
-        <button 
-          onClick={refreshDetection} 
-          disabled={loading}
-          style={{ 
-            padding: '0.75rem 1.5rem',
-            fontSize: '1rem',
-            backgroundColor: loading ? '#94a3b8' : '#3b82f6',
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '8px',
-            cursor: loading ? 'not-allowed' : 'pointer',
-            fontWeight: '500'
-          }}
-        >
-          {loading ? '🔄 检测中...' : '🔄 重新检测'}
-        </button>
       </div>
 
       {/* 主要内容区域 */}
@@ -85,41 +60,6 @@ export default function Home() {
 
       {result && (
         <>
-          {/* 🎯 验证结果横幅 */}
-          {result.verification && (
-            <div style={{ 
-              padding: '2rem', 
-              borderRadius: '12px', 
-              marginBottom: '2rem',
-              textAlign: 'center',
-              backgroundColor: result.verification.isOptimal ? '#10b981' : '#f59e0b',
-              color: 'white',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-            }}>
-              <h2 style={{ marginBottom: '1rem', fontSize: '1.8rem' }}>
-                {result.verification.message}
-              </h2>
-              
-              {/* 验证证据 */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', marginTop: '2rem' }}>
-                {result.verification.evidence?.map((item: string, index: number) => (
-                  <div key={index} style={{ 
-                    backgroundColor: 'rgba(255,255,255,0.2)', 
-                    padding: '1rem', 
-                    borderRadius: '8px',
-                    backdropFilter: 'blur(10px)'
-                  }}>
-                    <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>
-                      {item.split('：')[0]}
-                    </div>
-                    <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>
-                      {item.split('：')[1]}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* 📊 详细信息网格 */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', marginBottom: '2rem' }}>
@@ -132,7 +72,7 @@ export default function Home() {
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
             }}>
               <h3 style={{ marginBottom: '1rem', color: '#1e293b', fontSize: '1.3rem' }}>
-                🌍 您的地理位置
+                地理位置
               </h3>
               <div>
                 <InfoRow label="国家/地区" value={`${result.client?.country} (${getCountryName(result.client?.country)})`} />
@@ -152,7 +92,7 @@ export default function Home() {
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
             }}>
               <h3 style={{ marginBottom: '1rem', color: '#1e293b', fontSize: '1.3rem' }}>
-                🚀 边缘节点信息
+                边缘节点信息
               </h3>
               <div>
                 <InfoRow label="边缘区域" value={result.edge?.region} highlight={true} />
@@ -165,49 +105,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 🎯 验证说明 */}
-          <div style={{ 
-            backgroundColor: 'white', 
-            padding: '1.5rem', 
-            borderRadius: '12px',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-            marginBottom: '2rem'
-          }}>
-            <h3 style={{ marginBottom: '1rem', color: '#1e293b' }}>
-              🔍 如何验证 Edge Functions 在最近边缘节点？
-            </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
-              <div style={{ padding: '1rem', backgroundColor: '#eff6ff', borderRadius: '8px' }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>⚡</div>
-                <div style={{ fontWeight: '600', marginBottom: '0.5rem' }}>超低延迟</div>
-                <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>
-                  响应时间 &lt; 100ms 证明就近执行
-                </div>
-              </div>
-              <div style={{ padding: '1rem', backgroundColor: '#f0fdf4', borderRadius: '8px' }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌍</div>
-                <div style={{ fontWeight: '600', marginBottom: '0.5rem' }}>地理位置匹配</div>
-                <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>
-                  用户位置与边缘节点智能匹配
-                </div>
-              </div>
-              <div style={{ padding: '1rem', backgroundColor: '#fefce8', borderRadius: '8px' }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🚀</div>
-                <div style={{ fontWeight: '600', marginBottom: '0.5rem' }}>Edge Runtime</div>
-                <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>
-                  运行在 Vercel Edge Runtime 上
-                </div>
-              </div>
-              <div style={{ padding: '1rem', backgroundColor: '#fdf2f8', borderRadius: '8px' }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🕐</div>
-                <div style={{ fontWeight: '600', marginBottom: '0.5rem' }}>实时执行</div>
-                <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>
-                  每次请求都可能在不同节点执行
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* 🌐 多地区测试提示 */}
           <div style={{ 
             backgroundColor: '#fef3c7', 
@@ -215,9 +112,6 @@ export default function Home() {
             borderRadius: '12px',
             border: '1px solid #fbbf24'
           }}>
-            <h3 style={{ marginBottom: '1rem', color: '#92400e' }}>
-              🧪 想要进一步验证？试试这些方法：
-            </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
               <div>
                 <strong>🌏 亚洲测试：</strong> 使用日本/新加坡 VPN<br/>
